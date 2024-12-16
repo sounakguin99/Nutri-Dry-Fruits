@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function ServiceFeatures() {
   const features = [
     {
@@ -30,7 +32,7 @@ export default function ServiceFeatures() {
               className="flex flex-col items-center justify-center text-center border-b md:border-b-0 md:border-r border-gray-700 last:border-0 pb-6 md:pb-0"
             >
               <div className="mb-3">
-                <img
+                <Image
                   src={feature.icon}
                   alt=""
                   className="w-10 h-10 invert" // invert to make placeholder image white

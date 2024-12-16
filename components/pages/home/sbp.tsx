@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 
 const categories = [
@@ -83,8 +82,8 @@ export default function ShopByPurpose() {
       <div className="text-center mb-12">
         <h2 className="text-2xl font-bold mb-4">SHOP BY PURPOSE</h2>
         <p className="text-gray-600 max-w-2xl mx-auto">
-          We just made it easy for you to shop on your terms. Let's get started
-          to find your way for Passion for Nutrition.
+          We just made it easy for you to shop on your terms. Let&apos;s get
+          started to find your way for Passion for Nutrition.
         </p>
       </div>
 
