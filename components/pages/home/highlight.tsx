@@ -6,33 +6,7 @@ import Image from "next/image";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const products = [
-  {
-    name: "Almond",
-    image: "/placeholder.svg?height=200&width=200",
-    bgColor: "bg-[#8B6E5E]",
-  },
-  {
-    name: "Cashew",
-    image: "/placeholder.svg?height=200&width=200",
-    bgColor: "bg-[#8B3E2F]",
-  },
-  {
-    name: "Pista",
-    image: "/placeholder.svg?height=200&width=200",
-    bgColor: "bg-[#6B7E5E]",
-  },
-  {
-    name: "Walnut",
-    image: "/placeholder.svg?height=200&width=200",
-    bgColor: "bg-[#8B1F41]",
-  },
-  {
-    name: "Raisin",
-    image: "/placeholder.svg?height=200&width=200",
-    bgColor: "bg-[#F4A460]",
-  },
-];
+import highlights from "../../data/homebanners/highlight"; // Import the highlights data
 
 export default function ProductSlider() {
   const sliderRef = useRef<Slider>(null);
@@ -83,7 +57,7 @@ export default function ProductSlider() {
       {/* Custom Navigation Arrows */}
       <button
         onClick={goToPrev}
-        className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 p-2 rounded-full shadow-lg hover:bg-white transition-colors"
+        className="absolute -left-[30px] top-1/2 -translate-y-1/2 z-10  p-2 "
         aria-label="Previous slide"
       >
         <svg
@@ -103,7 +77,7 @@ export default function ProductSlider() {
 
       <button
         onClick={goToNext}
-        className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 p-2 rounded-full shadow-lg hover:bg-white transition-colors"
+        className="absolute -right-[30px] top-1/2 -translate-y-1/2 z-10  p-2 "
         aria-label="Next slide"
       >
         <svg
@@ -123,18 +97,15 @@ export default function ProductSlider() {
 
       {/* Slider */}
       <Slider ref={sliderRef} {...settings} className="product-slider -mx-2">
-        {products.map((product, index) => (
+        {highlights.map((item, index) => (
           <div key={index} className="px-2">
-            <div className={`${product.bgColor} rounded-lg p-4 text-center`}>
-              <div className="relative aspect-square mb-4">
-                <Image
-                  src={product.image}
-                  alt={product.name}
-                  fill
-                  className="object-contain p-4"
-                />
-              </div>
-              <h3 className="text-white text-lg font-medium">{product.name}</h3>
+            <div className="relative aspect-square mb-4">
+              <Image
+                src={item.src}
+                alt={item.alt}
+                fill
+                className="object-contain p-4"
+              />
             </div>
           </div>
         ))}

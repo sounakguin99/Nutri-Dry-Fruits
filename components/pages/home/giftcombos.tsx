@@ -1,36 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
+import giftcombos from "../../data/homebanners/giftcombos";
 
 export default function GiftCombos() {
-  const products = [
-    {
-      id: 1,
-      title: "Premium Gift Box",
-      description: "Lorem Ipsum Is Simply Dummy Text Typesetting Industry.",
-      image: "/placeholder.svg?height=300&width=300",
-    },
-    {
-      id: 2,
-      title: "Cardboard Filled Gift Box",
-      description: "Lorem Ipsum Is Simply Dummy Text Typesetting Industry.",
-      image: "/placeholder.svg?height=300&width=300",
-    },
-    {
-      id: 3,
-      title: "Dry Fruits Gift Box",
-      description: "Lorem Ipsum Is Simply Dummy Text Typesetting Industry.",
-      image: "/placeholder.svg?height=300&width=300",
-    },
-    {
-      id: 4,
-      title: "Dry Fruits Gift Box",
-      description: "Lorem Ipsum Is Simply Dummy Text Typesetting Industry.",
-      image: "/placeholder.svg?height=300&width=300",
-    },
-  ];
-
   return (
-    <section className="container mx-auto px-4 py-12">
+    <section className="container mx-auto px-4 py-12 w-11/12">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h2 className="text-2xl font-bold mb-2">GIFT COMBOS</h2>
@@ -47,7 +21,7 @@ export default function GiftCombos() {
         </Link>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {products.map((product) => (
+        {giftcombos.map((product) => (
           <div key={product.id} className="bg-white rounded-lg overflow-hidden">
             <div className="relative aspect-square mb-4 overflow-hidden">
               <Image

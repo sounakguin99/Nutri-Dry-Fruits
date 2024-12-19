@@ -1,3 +1,5 @@
+import HeroSection from "@/components/pages/home/banner";
+
 import TestimonialSlider from "@/components/pages/home/customers";
 import GiftCombos from "@/components/pages/home/giftcombos";
 import ProductSlider from "@/components/pages/home/highlight";
@@ -9,6 +11,7 @@ import React from "react";
 export default function page() {
   return (
     <div>
+      <HeroSection />
       <ProductSlider />
       <MostViewedProducts />
       <Recommendedforyou />

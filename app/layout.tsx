@@ -25,8 +25,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <title>Pasel Studio</title>
-        <link rel="icon" href="/others/Pastelstudio.svg" />
+        <title>Arihant Dry Fruits</title>
+        <link rel="icon" href="/logo/logo.svg" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}

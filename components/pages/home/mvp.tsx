@@ -1,31 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
+import mvp from "../../data/homebanners/mvp"; // Adjust the path to the location of the mvp.js file
 
 export default function MostViewedProducts() {
-  const products = [
-    {
-      name: "Almond",
-      image: "/placeholder.svg?height=300&width=300",
-      description:
-        "Lorem Ipsum Is Simply Dummy Text Of The Printing And Typesetting Industry.",
-    },
-    {
-      name: "Cashew",
-      image: "/placeholder.svg?height=300&width=300",
-      description:
-        "Lorem Ipsum Is Simply Dummy Text Of The Printing And Typesetting Industry.",
-    },
-    {
-      name: "Pista",
-      image: "/placeholder.svg?height=300&width=300",
-      description:
-        "Lorem Ipsum Is Simply Dummy Text Of The Printing And Typesetting Industry.",
-    },
-  ];
-
   return (
-    <section className="max-w-7xl mx-auto px-4 py-12">
-      <div className="flex justify-between items-center mb-8">
+    <section className="w-11/12 mx-auto 2xl:pl-[40px] 2xl:pr-[20px]">
+      <div className="flex flex-col lg:flex-row justify-between items-center mb-8">
         <div>
           <h2 className="text-2xl font-bold mb-2">MOST VIEWED PRODUCTS</h2>
           <p className="text-gray-600">
@@ -34,51 +14,42 @@ export default function MostViewedProducts() {
         </div>
         <Link
           href="/products"
-          className="px-6 py-2 border border-gray-300 rounded hover:bg-gray-50 transition-colors"
+          className="px-10 py-2 border-2 border-black rounded mt-8 lg:mt-0"
         >
           VIEW ALL
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {products.map((product, index) => (
-          <div key={index} className="space-y-4">
-            <div className="relative aspect-square rounded-full overflow-hidden border-2 border-gray-200">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-x-0 gap-y-8 items-center lg:pr-[280px] ">
+        {mvp.map((product, index) => (
+          <div key={index} className="text-center ">
+            <div className="relative lg:h-auto lg:w-auto h-[200px] w-[200px] mx-auto lg:m-none">
               <Image
-                src={product.image}
-                alt={product.name}
-                fill
-                className="object-cover"
+                src={product.src}
+                alt={product.alt}
+                height={250}
+                width={250}
+                className="rounded-full object-cover 2xl:h-[200px] 2xl:w-[200px]"
               />
             </div>
-            <div className="text-center">
-              <h3 className="font-semibold text-xl mb-2">{product.name}</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                {product.description}
-              </p>
-            </div>
+            <h3 className="font-semibold text-xl mt-3 mb-2 text-left">
+              {product.alt}
+            </h3>
+            <p className="text-gray-600 text-sm lg:w-[80%] text-left leading-relaxed pt-2">
+              {product.description}
+            </p>
           </div>
         ))}
 
         {/* Feature Banner */}
-        <div className="relative rounded-2xl overflow-hidden">
+        <div className="relative flex items-center lg:w-[550px] justify-center h-full bg-cover rounded-xl overflow-hidden lg:col-span-1">
           <Image
-            src="/placeholder.svg?height=400&width=400"
+            src="/home/mvp/DN.svg"
             alt="Dry Fruits Collection"
-            fill
-            className="object-cover"
+            height={500}
+            width={700}
+            className="object-contain lg:object-cover 2xl:h-full 2xl:w-full"
           />
-          <div className="absolute inset-0 bg-black/40 p-6 flex flex-col justify-center items-center text-center">
-            <h3 className="text-white text-2xl font-bold mb-4 leading-tight">
-              Experience The Wholesome Goodness Of Hand Picked Dry Fruits.
-            </h3>
-            <Link
-              href="/products"
-              className="inline-block px-6 py-2 bg-[#CD7F32] text-white rounded hover:bg-[#B87333] transition-colors"
-            >
-              DISCOVER NOW
-            </Link>
-          </div>
         </div>
       </div>
     </section>
