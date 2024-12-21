@@ -1,48 +1,27 @@
 import Image from "next/image";
+import servicedata from "../../data/home/services/service";
 
 export default function ServiceFeatures() {
-  const features = [
-    {
-      id: 1,
-      icon: "/placeholder.svg?height=40&width=40",
-      title: "Free Shipping On Orders",
-      subtitle: "Above ₹1500/-",
-    },
-    {
-      id: 2,
-      icon: "/placeholder.svg?height=40&width=40",
-      title: "Pay",
-      subtitle: "On Delivery",
-    },
-    {
-      id: 3,
-      icon: "/placeholder.svg?height=40&width=40",
-      title: "100% Quality",
-      subtitle: "Guaranteed",
-    },
-  ];
-
   return (
-    <div className="bg-black text-white py-6 px-4">
+    <div className="bg-black flex justify-center mt-[80px] mb-[80px] items-center lg:h-[180px] text-white py-6 px-4 w-11/12 mx-auto rounded-xl">
       <div className="container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {features.map((feature) => (
+          {servicedata.map((service, index) => (
             <div
-              key={feature.id}
+              key={index}
               className="flex flex-col items-center justify-center text-center border-b md:border-b-0 md:border-r border-gray-700 last:border-0 pb-6 md:pb-0"
             >
               <div className="mb-3">
                 <Image
-                  src={feature.icon}
-                  alt=""
-                  className="w-10 h-10 invert" // invert to make placeholder image white
-                  width={40}
-                  height={40}
+                  src={service.icons}
+                  alt={service.text}
+                  className="h-[80px] w-[80px]"
+                  width={100}
+                  height={100}
                 />
               </div>
               <div>
-                <h3 className="font-medium">{feature.title}</h3>
-                <p className="text-sm text-gray-300">{feature.subtitle}</p>
+                <h3 className="font-medium">{service.text}</h3>
               </div>
             </div>
           ))}

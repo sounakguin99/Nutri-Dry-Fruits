@@ -86,32 +86,55 @@ const ContactForm: React.FC = () => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="max-w-xl mx-auto p-6 bg-white shadow-md rounded-md space-y-4"
-    >
-      <h2 className="text-xl font-semibold">SEND US YOUR MESSAGE</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label className="block font-medium">
-            Name*
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              className={`w-full mt-1 p-2 border ${
-                errors.name ? "border-red-500" : "border-gray-300"
-              } rounded-md`}
-              placeholder="Enter your name"
-            />
-            {errors.name && (
-              <span className="text-red-500 text-sm">{errors.name}</span>
-            )}
-          </label>
+    <div>
+      <h2 className="text-xl max-w-xl mx-auto text-left font-semibold mt-[50px]">
+        SEND US YOUR MESSAGE
+      </h2>
+
+      <form
+        onSubmit={handleSubmit}
+        className="max-w-xl mx-auto pt-5 space-y-4 mt-[20px]  overflow-visible"
+      >
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="block font-medium">
+              Name*
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                className={`w-full mt-1 p-2 border ${
+                  errors.name ? "border-red-500" : "border-gray-300"
+                } rounded-md`}
+                placeholder="Enter your name"
+              />
+              {errors.name && (
+                <span className="text-red-500 text-sm">{errors.name}</span>
+              )}
+            </label>
+          </div>
+          <div>
+            <label className="block font-medium">
+              Phone*
+              <input
+                type="text"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                className={`w-full mt-1 p-2 border ${
+                  errors.phone ? "border-red-500" : "border-gray-300"
+                } rounded-md`}
+                placeholder="Enter your Number"
+              />
+              {errors.phone && (
+                <span className="text-red-500 text-sm">{errors.phone}</span>
+              )}
+            </label>
+          </div>
         </div>
         <div>
-          <label className="block font-medium">
+          <label className="block font-medium w-full">
             Email*
             <input
               type="email"
@@ -120,7 +143,7 @@ const ContactForm: React.FC = () => {
               onChange={handleChange}
               className={`w-full mt-1 p-2 border ${
                 errors.email ? "border-red-500" : "border-gray-300"
-              } rounded-md`}
+              } rounded-md overflow-x-auto`}
               placeholder="Enter your email"
             />
             {errors.email && (
@@ -130,70 +153,52 @@ const ContactForm: React.FC = () => {
         </div>
         <div>
           <label className="block font-medium">
-            Phone*
-            <input
-              type="text"
-              name="phone"
-              value={formData.phone}
+            Message*
+            <textarea
+              name="message"
+              value={formData.message}
               onChange={handleChange}
-              className={`w-full mt-1 p-2 border ${
-                errors.phone ? "border-red-500" : "border-gray-300"
+              className={`w-full h-32 mt-1 p-2 border ${
+                errors.message ? "border-red-500" : "border-gray-300"
               } rounded-md`}
-              placeholder="Enter your Number"
+              placeholder="Write your message here"
             />
-            {errors.phone && (
-              <span className="text-red-500 text-sm">{errors.phone}</span>
+            {errors.message && (
+              <span className="text-red-500 text-sm">{errors.message}</span>
             )}
           </label>
         </div>
-      </div>
-      <div>
-        <label className="block font-medium">
-          Message*
-          <textarea
-            name="message"
-            value={formData.message}
+        <div className="flex items-center space-x-2">
+          <input
+            type="checkbox"
+            name="terms"
+            checked={formData.terms}
             onChange={handleChange}
-            className={`w-full mt-1 p-2 border ${
-              errors.message ? "border-red-500" : "border-gray-300"
-            } rounded-md`}
-            placeholder="Write your message here"
+            className="w-4 h-4"
           />
-          {errors.message && (
-            <span className="text-red-500 text-sm">{errors.message}</span>
+          <span className="text-sm">
+            you agree to our{" "}
+            <a href="/privacypolicy" className="text-blue-500 underline">
+              privacy policy
+            </a>{" "}
+            and{" "}
+            <a href="/terms&condition" className="text-blue-500 underline">
+              terms & conditions
+            </a>
+            .
+          </span>
+          {errors.terms && (
+            <span className="text-red-500 text-sm ml-2">{errors.terms}</span>
           )}
-        </label>
-      </div>
-      <div className="flex items-center space-x-2">
-        <input
-          type="checkbox"
-          name="terms"
-          checked={formData.terms}
-          onChange={handleChange}
-          className="w-4 h-4"
-        />
-        <span className="text-sm">
-          you agree to our{" "}
-          <a href="#" className="text-blue-500 underline">
-            privacy policy
-          </a>{" "}
-          and{" "}
-          <a href="#" className="text-blue-500 underline">
-            terms & conditions
-          </a>
-          .
-        </span>
-        {errors.terms && (
-          <span className="text-red-500 text-sm ml-2">{errors.terms}</span>
-        )}
-      </div>
-      <button
-        type="submit"
-        className="w-full py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-700"
-      >
-        SEND MESSAGE
-      </button>
-    </form>
+        </div>
+        <button
+          type="submit"
+          className="relative w-auto py-2 px-8 !mt-7 bg-[#65504B] border text-white rounded-md hover:bg-white hover:border-[#65504B] hover:text-[#65504B] transition-colors duration-300"
+        >
+          SEND MESSAGE
+        </button>
+      </form>
+    </div>
   );
 };
 

@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function StoreGallery() {
   return (
-    <div className="container mx-auto pl-12 pr-12">
+    <div className="w-11/12 mx-auto mt-[80px]">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {/* Left column - large image */}
         <div className="md:row-span-3">

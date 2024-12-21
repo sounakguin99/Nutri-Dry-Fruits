@@ -11,9 +11,9 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Logo and Social Section */}
           <div className="space-y-6">
-            <div className="flex items-center gap-3">
+            <div className="flex flex-col items-left gap-3">
               <Image
-                src="/placeholder.svg?height=60&width=60"
+                src="/logo/logo.svg"
                 alt="Arihant Dry Fruits Logo"
                 width={60}
                 height={60}

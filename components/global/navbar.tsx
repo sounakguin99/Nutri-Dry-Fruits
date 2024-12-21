@@ -9,12 +9,12 @@ export default function Navbar() {
 
   return (
     <nav className="bg-white shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-11/12 mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo and Brand */}
           <div className="flex items-center gap-3">
             <Image
-              src="/placeholder.svg?height=40&width=40"
+              src="/logo/logo.svg"
               alt="Arihant Dry Fruits Logo"
               width={40}
               height={40}
@@ -51,8 +51,10 @@ export default function Navbar() {
             >
               STORE
             </Link>
+          </div>
+          <div>
             <Link
-              href="/contact"
+              href="/contactus"
               className="bg-[#6B584C] text-white px-6 py-2 rounded hover:bg-[#574539] transition-colors"
             >
               CONTACT US

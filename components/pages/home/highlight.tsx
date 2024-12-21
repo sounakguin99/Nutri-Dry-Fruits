@@ -6,7 +6,7 @@ import Image from "next/image";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import highlights from "../../data/homebanners/highlight"; // Import the highlights data
+import highlights from "../../data/home/homebanners/highlight"; // Import the highlights data
 
 export default function ProductSlider() {
   const sliderRef = useRef<Slider>(null);

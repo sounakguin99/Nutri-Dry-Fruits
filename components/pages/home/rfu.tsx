@@ -1,82 +1,60 @@
 import Image from "next/image";
 import Link from "next/link";
+import mvp from "../../data/home/homebanners/mvp"; // Adjust the path to the mvp.js file
 
-export default function Recommendedforyou() {
-  const products = [
-    {
-      name: "Almond",
-      image: "/placeholder.svg?height=300&width=300",
-      description:
-        "Lorem Ipsum Is Simply Dummy Text Of The Printing And Typesetting Industry.",
-    },
-    {
-      name: "Cashew",
-      image: "/placeholder.svg?height=300&width=300",
-      description:
-        "Lorem Ipsum Is Simply Dummy Text Of The Printing And Typesetting Industry.",
-    },
-    {
-      name: "Pista",
-      image: "/placeholder.svg?height=300&width=300",
-      description:
-        "Lorem Ipsum Is Simply Dummy Text Of The Printing And Typesetting Industry.",
-    },
-  ];
-
+export default function MostViewedProducts() {
   return (
-    <section className="max-w-7xl mx-auto px-4 py-12">
-      <div className="flex justify-between items-center mb-8">
+    <section className="w-11/12 mx-auto xl:pl-5 xl:pr-6 2xl:pl-10 2xl:pr-5">
+      {/* Header Section */}
+      <div className="flex flex-col lg:flex-row justify-between items-center mb-8">
         <div>
-          <h2 className="text-2xl font-bold mb-2">MOST VIEWED PRODUCTS</h2>
-          <p className="text-gray-600">
-            Taste The Perfect Blend Of Nutrients And Flavor In Every Dry Fruit.
+          <h2 className="text-xl font-semibold mb-2 tracking-wide">
+            RECOMMENDED FOR YOU
+          </h2>
+          <p className="text-gray-500">
+            Lorem Ipsum Is Simply Dummy Text Of The Printing And Typesetting
+            Industry.
           </p>
         </div>
         <Link
           href="/products"
-          className="px-6 py-2 border border-gray-300 rounded hover:bg-gray-50 transition-colors"
+          className="px-10 py-2 border-2 border-black rounded mt-8 lg:mt-0"
         >
           VIEW ALL
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {/* Main Content Section */}
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Feature Banner */}
-        <div className="relative rounded-2xl overflow-hidden">
+        <div className="relative mt-8 xl:mt-0 flex items-center w-full lg:hidden xl:block xl:w-[530px] 2xl:w-[550px] justify-center h-full bg-cover rounded-xl overflow-hidden lg:col-span-1">
           <Image
-            src="/placeholder.svg?height=400&width=400"
-            alt="Dry Fruits Collection"
-            fill
-            className="object-cover"
+            src="/home/mvp/DN.svg" // Replace with your banner image path
+            alt="Fuel Your Body With Nature’s Energy Boosters"
+            height={400}
+            width={500}
+            className="object-contain xl:object-cover 2xl:h-full 2xl:w-full"
           />
-          <div className="absolute inset-0 bg-black/40 p-6 flex flex-col justify-center items-center text-center">
-            <h3 className="text-white text-2xl font-bold mb-4 leading-tight">
-              Experience The Wholesome Goodness Of Hand Picked Dry Fruits.
-            </h3>
-            <Link
-              href="/products"
-              className="inline-block px-6 py-2 bg-[#CD7F32] text-white rounded hover:bg-[#B87333] transition-colors"
-            >
-              DISCOVER NOW
-            </Link>
-          </div>
         </div>
-        {products.map((product, index) => (
-          <div key={index} className="space-y-4">
-            <div className="relative aspect-square rounded-full overflow-hidden border-2 border-gray-200">
+
+        {/* Most Viewed Products */}
+        {mvp.map((product, index) => (
+          <div key={index} className="text-center ">
+            <div className="relative lg:h-auto lg:w-auto h-[200px] w-[200px] mx-auto lg:m-none">
               <Image
-                src={product.image}
-                alt={product.name}
-                fill
-                className="object-cover"
+                src={product.src}
+                alt={product.alt}
+                height={250}
+                width={250}
+                className="rounded-full object-cover xl:h-[180px] xl:w-[180px] 2xl:h-[200px] 2xl:w-[200px]"
               />
             </div>
-            <div className="text-center">
-              <h3 className="font-semibold text-xl mb-2">{product.name}</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                {product.description}
-              </p>
-            </div>
+            <h3 className="font-semibold text-xl mt-3 mb-2 text-left">
+              {product.alt}
+            </h3>
+            <p className="text-gray-600 text-sm xl:w-[80%] text-left leading-relaxed pt-2">
+              {product.description}
+            </p>
           </div>
         ))}
       </div>

@@ -4,7 +4,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 
 import Image from "next/image";
-import homebanners from "../../../components/data/homebanners/banner"; // Ensure this path is correct relative to your file structure
+import homebanners from "../../data/home/homebanners/banner"; // Ensure this path is correct relative to your file structure
 
 const HeroSection: React.FC = () => {
   const settings = {

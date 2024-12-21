@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import giftcombos from "../../data/homebanners/giftcombos";
+import giftcombos from "../../data/home/homebanners/giftcombos";
 
 export default function GiftCombos() {
   return (
@@ -14,8 +14,8 @@ export default function GiftCombos() {
           </p>
         </div>
         <Link
-          href="/gift-combos"
-          className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
+          href="/products"
+          className="px-10 py-2 border-2 border-black rounded mt-8 lg:mt-0"
         >
           VIEW ALL
         </Link>

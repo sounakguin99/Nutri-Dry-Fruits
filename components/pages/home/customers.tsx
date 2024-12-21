@@ -48,13 +48,7 @@ export default function TestimonialSlider() {
   if (!mounted) return null;
 
   return (
-    <section className="py-16 px-4 relative bg-[#faf7f2]">
-      <div
-        className="absolute inset-0 opacity-10"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-        }}
-      />
+    <section className="py-16 px-4 relative bg-[url('/others/bg1.svg')] bg-cover bg-center w-2/4 mx-auto">
       <div className="relative">
         <h2 className="text-2xl font-bold text-center mb-8">
           WHAT OUR CUSTOMER SAY
@@ -63,7 +57,7 @@ export default function TestimonialSlider() {
           {testimonials.map((testimonial) => (
             <div key={testimonial.id} className="outline-none">
               <div className="text-center px-4">
-                <p className="text-gray-600 mb-4 max-w-2xl mx-auto">
+                <p className="text-gray-600 mb-4 w-full pl-16 pr-16 mx-auto">
                   {testimonial.text}
                 </p>
                 <p className="font-medium">{testimonial.author}</p>
@@ -86,7 +80,7 @@ function CustomArrow({
   return (
     <button
       onClick={onClick}
-      className={`absolute top-1/2 -translate-y-1/2 ${
+      className={`absolute top-3 -translate-y-1/2 ${
         direction === "prev" ? "left-0" : "right-0"
       } z-10 p-2 hover:opacity-75 transition-opacity`}
       aria-label={direction === "prev" ? "Previous slide" : "Next slide"}
