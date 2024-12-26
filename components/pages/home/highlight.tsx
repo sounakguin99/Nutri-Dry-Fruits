@@ -6,7 +6,7 @@ import Image from "next/image";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import highlights from "../../data/home/homebanners/highlight"; // Import the highlights data
+import highlights from "../../data/home/homebanners/highlight";
 
 export default function ProductSlider() {
   const sliderRef = useRef<Slider>(null);
@@ -15,10 +15,20 @@ export default function ProductSlider() {
     dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 4,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    draggable: true,
+    swipe: true,
+    slidesToShow: 5,
     slidesToScroll: 1,
     arrows: false,
     responsive: [
+      {
+        breakpoint: 1400,
+        settings: {
+          slidesToShow: 4,
+        },
+      },
       {
         breakpoint: 1024,
         settings: {
@@ -27,12 +37,6 @@ export default function ProductSlider() {
       },
       {
         breakpoint: 768,
-        settings: {
-          slidesToShow: 2,
-        },
-      },
-      {
-        breakpoint: 480,
         settings: {
           slidesToShow: 1,
         },
@@ -53,11 +57,11 @@ export default function ProductSlider() {
   };
 
   return (
-    <div className="relative max-w-7xl mx-auto px-4 py-12">
+    <div className="relative w-10/12 mx-auto px-4 py-12">
       {/* Custom Navigation Arrows */}
       <button
         onClick={goToPrev}
-        className="absolute -left-[30px] top-1/2 -translate-y-1/2 z-10  p-2 "
+        className="absolute -left-[30px] top-1/2 -translate-y-1/2 z-10  p-2"
         aria-label="Previous slide"
       >
         <svg
@@ -77,7 +81,7 @@ export default function ProductSlider() {
 
       <button
         onClick={goToNext}
-        className="absolute -right-[30px] top-1/2 -translate-y-1/2 z-10  p-2 "
+        className="absolute -right-[30px] top-1/2 -translate-y-1/2 z-10  p-2"
         aria-label="Next slide"
       >
         <svg
@@ -96,7 +100,7 @@ export default function ProductSlider() {
       </button>
 
       {/* Slider */}
-      <Slider ref={sliderRef} {...settings} className="product-slider -mx-2">
+      <Slider ref={sliderRef} {...settings} className="-mx-2 ">
         {highlights.map((item, index) => (
           <div key={index} className="px-2">
             <div className="relative aspect-square mb-4">

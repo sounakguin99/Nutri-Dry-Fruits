@@ -1,104 +1,138 @@
 "use client";
+
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
-import { useState, useEffect } from "react";
-import { products } from "../../data/products/products"; // Import products
+import { useState, useEffect, useRef, useCallback } from "react";
+import {
+  Product as ImportedProduct,
+  products,
+} from "../../data/products/products"; // Adjust the import path as needed
 
-// Product interface with image as optional
-interface Product {
-  id: number;
-  title: string;
-  description: string;
-  src?: string; // Mark image as optional
+// Product interface
+interface Product extends ImportedProduct {
   quantity: number;
   weight: string;
+}
+
+// Form data interface
+interface FormData {
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
+  message: string;
 }
 
 const EnquiryPage: React.FC = () => {
   const searchParams = useSearchParams();
   const productId = searchParams.get("id");
+  const initialQuantity = searchParams.get("quantity");
+  const initialWeight = searchParams.get("weight");
 
   // Form state
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
     phone: "",
     address: "",
     message: "",
   });
-
-  const [errors, setErrors] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    address: "",
-    message: "",
-  });
+  const [errors, setErrors] = useState<Partial<FormData>>({});
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   // Product state
   const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<ImportedProduct[]>(
+    []
+  );
   const [searchQuery, setSearchQuery] = useState("");
-  const [visibleProducts, setVisibleProducts] = useState<Product[]>([]);
-
-  const [isSubmitting, setIsSubmitting] = useState(false); // Remove this line if not used.
-
+  const [visibleProducts, setVisibleProducts] = useState<ImportedProduct[]>([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isProductSelected, setIsProductSelected] = useState<Set<number>>(
     new Set()
   );
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const observer = useRef<IntersectionObserver | null>(null);
+
+  const lastProductElementRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setPage((prevPage) => prevPage + 1);
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [hasMore]
+  );
 
   useEffect(() => {
-    // Load initial products (5 at a time)
-    setVisibleProducts(products.slice(0, 5));
+    const startIndex = (page - 1) * 5;
+    const endIndex = startIndex + 5;
+    const newProducts = products.slice(startIndex, endIndex);
 
-    // Auto-select product if coming from the product details page
+    setVisibleProducts((prevProducts) => {
+      const updatedProducts = [...prevProducts, ...newProducts];
+      return Array.from(new Set(updatedProducts.map((p) => p.id))).map(
+        (id) => updatedProducts.find((p) => p.id === id)!
+      );
+    });
+
+    setHasMore(endIndex < products.length);
+  }, [page]);
+
+  useEffect(() => {
     if (productId) {
       const selected = products.find(
         (product) => product.id === Number(productId)
-      ); // Ensure productId is a number
-      if (selected) addProduct(selected);
+      );
+      if (selected) {
+        const newProduct: Product = {
+          ...selected,
+          quantity: Number(initialQuantity) || 1,
+          weight: initialWeight || "100gm",
+        };
+        setSelectedProducts([newProduct]);
+        setIsProductSelected(new Set([selected.id]));
+      }
     }
-  }, [productId]);
+  }, [productId, initialQuantity, initialWeight]);
 
-  const validateForm = () => {
-    const newErrors = {
-      name: !formData.name.trim() ? "Name is required" : "",
-      email: !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)
-        ? "Enter a valid email"
-        : "",
-      phone: !/^\d{10}$/.test(formData.phone)
-        ? "Phone number must be 10 digits"
-        : "",
-      address: !formData.address.trim() ? "Address is required" : "",
-      message: !formData.message.trim() ? "Message is required" : "",
-    };
+  const validateForm = (): boolean => {
+    const newErrors: Partial<FormData> = {};
+    if (!formData.name.trim()) newErrors.name = "Name is required";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email))
+      newErrors.email = "Enter a valid email";
+    if (!/^\d{10}$/.test(formData.phone))
+      newErrors.phone = "Phone number must be 10 digits";
+    if (!formData.address.trim()) newErrors.address = "Address is required";
+    if (!formData.message.trim()) newErrors.message = "Message is required";
 
     setErrors(newErrors);
-    return Object.values(newErrors).every((error) => !error);
+    return Object.keys(newErrors).length === 0;
   };
 
-  // Add product to the selected list
-  const addProduct = (product: Product) => {
-    setSelectedProducts((prev) => [
-      ...prev,
-      { ...product, quantity: 1, weight: "100gm" },
-    ]);
+  const addProduct = (product: ImportedProduct) => {
+    if (!isProductSelected.has(product.id)) {
+      setSelectedProducts((prev) => [
+        ...prev,
+        { ...product, quantity: 1, weight: "100gm" },
+      ]);
+      setIsProductSelected(new Set([...isProductSelected, product.id]));
+    }
   };
 
-  // Toggle product selection
-  const toggleProductSelect = (product: Product) => {
-    const newSelectedProducts = new Set(isProductSelected);
-    if (newSelectedProducts.has(product.id)) {
-      newSelectedProducts.delete(product.id);
-      setSelectedProducts((prev) => prev.filter((p) => p.id !== product.id));
+  const toggleProductSelect = (product: ImportedProduct) => {
+    if (isProductSelected.has(product.id)) {
+      removeProduct(product.id);
     } else {
-      newSelectedProducts.add(product.id);
       addProduct(product);
     }
-    setIsProductSelected(newSelectedProducts);
   };
 
-  // Handle form changes
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -106,31 +140,18 @@ const EnquiryPage: React.FC = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Handle product search
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
     const filtered = products.filter((product) =>
       product.title.toLowerCase().includes(e.target.value.toLowerCase())
     );
-    setFilteredProducts(filtered.slice(0, 5)); // Show only the first 5 filtered products
+    setFilteredProducts(filtered.slice(0, 5));
   };
 
-  // Load more products on scroll
-  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
-    const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
-
-    if (scrollTop + clientHeight >= scrollHeight) {
-      setVisibleProducts((prev) =>
-        products.slice(0, Math.min(prev.length + 5, products.length))
-      );
-    }
-  }; // Remove `currentLength` if not utilized.
-
-  // Update product quantity or weight
   const updateProduct = (
     id: number,
     field: "quantity" | "weight",
-    value: string | number // Define the proper type here
+    value: string | number
   ) => {
     setSelectedProducts((prev) =>
       prev.map((product) =>
@@ -139,34 +160,87 @@ const EnquiryPage: React.FC = () => {
     );
   };
 
-  // Handle form submit
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Validate the form
     if (!validateForm()) return;
 
+    // Prepare the data for submission
+    const enquiryData = {
+      ...formData,
+      selectedProducts: selectedProducts.map((product) => ({
+        id: product.id,
+        title: product.title,
+        quantity: product.quantity,
+        weight: product.weight,
+      })),
+    };
+
     setIsSubmitting(true);
-    setTimeout(() => {
-      alert("Form Submitted!");
+    setSuccessMessage(""); // Clear previous success message
+    setErrorMessage(""); // Clear previous error message
+
+    try {
+      // Send the data to the API
+      const response = await fetch("/api/enquiry", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(enquiryData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit the enquiry");
+      }
+
+      setSuccessMessage("Enquiry submitted successfully!");
+
+      // Clear success message after 5 seconds
+      setTimeout(() => {
+        setSuccessMessage(""); // Reset success message after timeout
+      }, 5000);
+
+      // Reset form after submission
       setFormData({ name: "", email: "", phone: "", address: "", message: "" });
+      setSelectedProducts([]); // Clear selected products
+      setIsProductSelected(new Set()); // Clear product selection
+    } catch (error) {
+      console.error("Error submitting the enquiry:", error);
+      setErrorMessage(
+        "An error occurred while submitting the enquiry. Please try again later."
+      );
+
+      // Clear error message after 5 seconds
+      setTimeout(() => {
+        setErrorMessage(""); // Reset error message after timeout
+      }, 5000);
+    } finally {
       setIsSubmitting(false);
-    }, 2000);
+    }
   };
 
   const removeProduct = (id: number) => {
     setSelectedProducts((prevProducts) =>
       prevProducts.filter((product) => product.id !== id)
     );
+    setIsProductSelected((prev) => {
+      const newSet = new Set(prev);
+      newSet.delete(id);
+      return newSet;
+    });
   };
 
   return (
-    <div className="max-w-screen-lg mx-auto p-6 bg-gray-200 rounded-lg shadow flex flex-col space-y-6">
-      {/* First Div: Contains the form */}
-      <div className="flex flex-col space-y-4 rounded-lg shadow-md bg-white p-6">
+    <div className="max-w-screen-lg mx-auto p-4 sm:p-6 bg-white rounded-lg border  flex flex-col space-y-6 mt-[50px] lg:mt-[80px]">
+      {/* Form Section */}
+      <div className="flex flex-col space-y-4  ">
         <form className="space-y-4">
           <div className="space-y-2">
-            <div className="flex space-x-4">
+            <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
               {/* Name Field */}
-              <div className="flex flex-col w-1/3">
+              <div className="flex flex-col w-full sm:w-1/3">
                 <label htmlFor="name" className="text-sm font-semibold">
                   Name
                 </label>
@@ -184,7 +258,7 @@ const EnquiryPage: React.FC = () => {
               </div>
 
               {/* Email Field */}
-              <div className="flex flex-col w-1/3">
+              <div className="flex flex-col w-full sm:w-1/3">
                 <label htmlFor="email" className="text-sm font-semibold">
                   Email
                 </label>
@@ -202,7 +276,7 @@ const EnquiryPage: React.FC = () => {
               </div>
 
               {/* Phone Field */}
-              <div className="flex flex-col w-1/3">
+              <div className="flex flex-col w-full sm:w-1/3">
                 <label htmlFor="phone" className="text-sm font-semibold">
                   Phone
                 </label>
@@ -259,10 +333,10 @@ const EnquiryPage: React.FC = () => {
         </form>
       </div>
 
-      {/* Second Div: Contains search bar + product details (left) and table (right) */}
-      <div className="flex flex-col md:flex-row space-x-6">
+      {/* Product Search and Selection Section */}
+      <div className="flex flex-col lg:flex-row space-y-6 lg:space-y-0 lg:space-x-6 ">
         {/* Left Side: Search Bar and Product Details */}
-        <div className="flex-1 space-y-4 rounded-lg shadow-md p-6 bg-white">
+        <div className="flex-1 space-y-4 rounded-lg shadow-md p-4 sm:p-6 bg-white border ">
           {/* Search Bar */}
           <input
             type="text"
@@ -273,103 +347,114 @@ const EnquiryPage: React.FC = () => {
           />
 
           {/* Product Details */}
-          <div
-            className="h-64 overflow-y-auto border rounded"
-            onScroll={handleScroll}
-          >
-            {(filteredProducts.length > 0
-              ? filteredProducts
-              : visibleProducts
-            ).map((product) => (
-              <div
-                key={product.id}
-                className={`flex items-center p-2 border-b cursor-pointer ${
-                  isProductSelected.has(product.id) ? "bg-blue-100" : ""
-                }`}
-                onClick={() => toggleProductSelect(product)}
-              >
-                {product.src && (
-                  <Image
-                    src={product.src || "/placeholder.png"} // Add fallback for optional `src`
-                    alt={product.title}
-                    width={64}
-                    height={64}
-                    className="w-16 h-16 object-cover mr-4"
-                  />
-                )}
-                <div className="flex-1">
-                  <h3 className="font-bold">{product.title}</h3>
-                  <p className="text-sm text-gray-600">{product.description}</p>
+          <div className="h-64 overflow-y-auto rounded ">
+            {(searchQuery ? filteredProducts : visibleProducts).map(
+              (product, index) => (
+                <div
+                  key={`${product.id}-${index}`}
+                  ref={
+                    index === visibleProducts.length - 1
+                      ? lastProductElementRef
+                      : null
+                  }
+                  className={`flex items-center p-2 border-b cursor-pointer ${
+                    isProductSelected.has(product.id) ? "bg-blue-100" : ""
+                  }`}
+                  onClick={() => toggleProductSelect(product)}
+                >
+                  {product.src && (
+                    <Image
+                      src={product.src}
+                      alt={product.title}
+                      width={64}
+                      height={64}
+                      className="w-16 h-16 object-cover mr-4"
+                    />
+                  )}
+                  <div className="flex-1">
+                    <h3 className="font-bold">{product.title}</h3>
+                    {product.shortdescription && (
+                      <p className="text-sm text-gray-600">
+                        {product.shortdescription}
+                      </p>
+                    )}
+                  </div>
                 </div>
-              </div>
-            ))}
+              )
+            )}
           </div>
         </div>
 
         {/* Right Side: Product Table */}
-        <div className="flex-1 p-6 rounded-lg shadow-md bg-white">
-          <table className="w-full table-auto border-collapse border">
-            <thead>
-              <tr className="border-b">
-                <th className="p-2">Product</th>
-                <th className="p-2">Quantity</th>
-                <th className="p-2">Weight</th>
-                <th className="p-2">Remove</th> {/* New Remove Column */}
-              </tr>
-            </thead>
-            <tbody>
-              {selectedProducts.map((product) => (
-                <tr key={product.id} className="border-b">
-                  <td className="p-2">{product.title}</td>
-                  <td className="p-2">
-                    <input
-                      type="number"
-                      min={1}
-                      value={product.quantity}
-                      onChange={(e) =>
-                        updateProduct(
-                          product.id,
-                          "quantity",
-                          parseInt(e.target.value)
-                        )
-                      }
-                      className="w-16 p-1 border rounded"
-                    />
-                  </td>
-                  <td className="p-2">
-                    <select
-                      value={product.weight}
-                      onChange={(e) =>
-                        updateProduct(product.id, "weight", e.target.value)
-                      }
-                      className="w-20 p-1 border rounded"
-                    >
-                      <option value="100gm">100gm</option>
-                      <option value="200gm">200gm</option>
-                      <option value="500gm">500gm</option>
-                    </select>
-                  </td>
-                  <td className="p-2 text-center">
-                    <button
-                      type="button"
-                      onClick={() => removeProduct(product.id)} // Function to remove a product
-                      className="text-red-600 hover:text-red-800"
-                    >
-                      ✕
-                    </button>
-                  </td>
+        <div className="lg:flex-1 p-4 sm:p-6 rounded-lg lg:h-[380px] lg:overflow-y-auto shadow-md bg-white border ">
+          <div className="overflow-x-auto">
+            <table className="w-full table-auto border-collapse border">
+              <thead>
+                <tr className="border-b">
+                  <th className="p-2">Product</th>
+                  <th className="p-2">Quantity</th>
+                  <th className="p-2">Weight</th>
+                  <th className="p-2">Remove</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {selectedProducts.map((product, index) => (
+                  <tr key={`${product.id}-${index}`} className="border-b">
+                    <td className="p-2">{product.title}</td>
+                    <td className="p-2">
+                      <input
+                        type="number"
+                        min={1}
+                        value={product.quantity}
+                        onChange={(e) =>
+                          updateProduct(
+                            product.id,
+                            "quantity",
+                            parseInt(e.target.value) || 1
+                          )
+                        }
+                        className="w-16 p-1 border rounded"
+                      />
+                    </td>
+                    <td className="p-2">
+                      <select
+                        value={product.weight}
+                        onChange={(e) =>
+                          updateProduct(product.id, "weight", e.target.value)
+                        }
+                        className="w-20 p-1 border rounded"
+                      >
+                        <option value="100gm">100gm</option>
+                        <option value="200gm">250gm</option>
+                        <option value="500gm">500gm</option>
+                        <option value="1kg">1kg</option>
+                        <option value="2kg">2kg</option>
+                      </select>
+                    </td>
+                    <td className="p-2 text-center">
+                      <button
+                        type="button"
+                        onClick={() => removeProduct(product.id)}
+                        className="text-red-600 hover:text-red-800"
+                      >
+                        ✕
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
           {/* Submit Button */}
           <div className="mt-4 flex justify-end">
             <button
               type="submit"
               onClick={handleSubmit}
-              disabled={isSubmitting} // Disable button during submission
-              className={`p-3 rounded ${
-                isSubmitting ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500"
+              disabled={isSubmitting}
+              className={`rounded relative w-auto py-2 px-8 ${
+                isSubmitting
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-[#65504B] text-white border hover:bg-white hover:border-[#65504B] hover:text-[#65504B] transition-colors duration-300"
               }`}
             >
               {isSubmitting ? "Submitting..." : "Submit"}
@@ -377,6 +462,16 @@ const EnquiryPage: React.FC = () => {
           </div>
         </div>
       </div>
+      {successMessage && (
+        <div className="pt-10 text-center" style={{ color: "green" }}>
+          {successMessage}
+        </div>
+      )}
+      {errorMessage && (
+        <div className="pt-10 text-center" style={{ color: "red" }}>
+          {errorMessage}
+        </div>
+      )}
     </div>
   );
 };

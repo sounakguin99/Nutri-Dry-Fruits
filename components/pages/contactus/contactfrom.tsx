@@ -1,3 +1,4 @@
+// ContactForm.tsx
 "use client";
 import React, { useState } from "react";
 
@@ -18,7 +19,8 @@ const ContactForm: React.FC = () => {
     terms: "",
   });
 
-  // Regex for validation
+  const [successMessage, setSuccessMessage] = useState("");
+
   const nameRegex = /^[a-zA-Z\s]{3,50}$/;
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const phoneRegex = /^[0-9]{10}$/;
@@ -57,17 +59,13 @@ const ContactForm: React.FC = () => {
       [name]: fieldValue,
     }));
 
-    const debounce = setTimeout(() => {
-      setErrors((prev) => ({
-        ...prev,
-        [name]: validateField(name, fieldValue),
-      }));
-    }, 300);
-
-    return () => clearTimeout(debounce);
+    setErrors((prev) => ({
+      ...prev,
+      [name]: validateField(name, fieldValue),
+    }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const validationErrors = Object.keys(formData).reduce((acc, key) => {
@@ -79,14 +77,41 @@ const ContactForm: React.FC = () => {
     setErrors(validationErrors);
 
     if (!Object.values(validationErrors).some((error) => error !== "")) {
-      console.log("Form submitted:", formData);
+      try {
+        const response = await fetch("/api/contactus", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+
+        if (response.ok) {
+          setSuccessMessage("Your message has been sent successfully!");
+          setTimeout(() => setSuccessMessage(""), 5000);
+          setFormData({
+            name: "",
+            email: "",
+            phone: "",
+            message: "",
+            terms: false,
+          });
+        } else {
+          setSuccessMessage("Failed to send your message. Please try again.");
+          setTimeout(() => setSuccessMessage(""), 5000);
+        }
+      } catch (error) {
+        console.error("Error submitting form:", error);
+        setSuccessMessage("An error occurred. Please try again later.");
+        setTimeout(() => setSuccessMessage(""), 5000);
+      }
     } else {
       console.error("Validation errors:", validationErrors);
     }
   };
 
   return (
-    <div>
+    <div className="pl-5 pr-5 lg:pl-0 lg:pr-0">
       <h2 className="text-xl max-w-xl mx-auto text-left font-semibold mt-[50px]">
         SEND US YOUR MESSAGE
       </h2>
@@ -198,6 +223,9 @@ const ContactForm: React.FC = () => {
           SEND MESSAGE
         </button>
       </form>
+      {successMessage && (
+        <p className="pt-10 text-green-500 text-center">{successMessage}</p>
+      )}
     </div>
   );
 };

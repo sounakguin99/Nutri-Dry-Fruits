@@ -48,7 +48,7 @@ export default function TestimonialSlider() {
   if (!mounted) return null;
 
   return (
-    <section className="py-16 px-4 relative bg-[url('/others/bg1.svg')] bg-cover bg-center w-2/4 mx-auto">
+    <section className="py-16 px-4 relative bg-[url('/others/testibg.svg')] bg-cover rounded-3xl bg-center w-full lg:w-2/4 mx-auto">
       <div className="relative">
         <h2 className="text-2xl font-bold text-center mb-8">
           WHAT OUR CUSTOMER SAY

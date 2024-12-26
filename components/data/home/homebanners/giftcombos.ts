@@ -24,6 +24,12 @@ const giftcombos = [
     title: "Ultimate Gift Box",
     description: "Lorem Ipsum is simply dummy text typesetting industry.",
   },
+  {
+    id: 5,
+    image: "/home/giftcombos/gc1.svg",
+    title: "Premium Gift Box",
+    description: "Lorem Ipsum is simply dummy text typesetting industry.",
+  },
 ];
 
 export default giftcombos;

@@ -1,12 +1,17 @@
+import React, { Suspense } from "react";
 import EnquiryPage from "@/components/pages/enquiry/enquiry";
 import Header from "@/components/pages/enquiry/header";
-import React from "react";
+import ServiceFeatures from "@/components/pages/enquiry/service";
 
-export default function page() {
+export default function Page() {
   return (
     <div>
       <Header />
-      <EnquiryPage />
+      {/* Wrap the EnquiryPage with Suspense */}
+      <Suspense fallback={<div>Loading...</div>}>
+        <EnquiryPage />
+      </Suspense>
+      <ServiceFeatures />
     </div>
   );
 }

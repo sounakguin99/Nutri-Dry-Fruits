@@ -196,7 +196,7 @@ export default function Footer() {
               </Link>
               <Link
                 href="/terms"
-                className="hover:text-gray-200 transition-colors"
+                className="hover:text-gray-200 transition-colors pr-[50px]"
               >
                 Terms And Conditions
               </Link>

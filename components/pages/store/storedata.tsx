@@ -14,21 +14,21 @@ export default function StoreData() {
       <div className="space-y-4 mb-8">
         <p className="text-gray-700">
           Lorem Ipsum Is Simply Dummy Text Of The Printing And Typesetting
-          Industry. Lorem Ipsum Has Been The Industry's Standard Dummy Text Ever
-          Since The 1500s, When An Unknown Printer Took A Galley Of Type And
-          Scrambled It To Make A Type Specimen Book.
+          Industry. Lorem Ipsum Has Been The Industry&apos;s Standard Dummy Text
+          Ever Since The 1500s, When An Unknown Printer Took A Galley Of Type
+          And Scrambled It To Make A Type Specimen Book.
         </p>
 
         <p className="text-gray-700">
           Lorem Ipsum Is Simply Dummy Text Of The Printing And Typesetting
-          Industry. Lorem Ipsum Has Been The Industry's Standard Dummy Text Ever
-          Since The 1500s, When An Unknown Printer Took A Galley Of Type And
-          Scrambled It To Make A Type Specimen Book.
+          Industry. Lorem Ipsum Has Been The Industry&apos;s Standard Dummy Text
+          Ever Since The 1500s, When An Unknown Printer Took A Galley Of Type
+          And Scrambled It To Make A Type Specimen Book.
         </p>
       </div>
 
       <div className="grid md:grid-cols-3 gap-6">
-        <div className="flex items-center gap-2">
+        <div className="flex items-start gap-2">
           <svg
             className="w-5 h-5 text-orange-600 flex-shrink-0"
             viewBox="0 0 24 24"

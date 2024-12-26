@@ -17,7 +17,7 @@ export default function Header() {
 
       {/* Centered Text */}
       <div className="absolute inset-0 flex items-center justify-center">
-        <h1 className="text-white text-2xl lg:text-4xl">About Us</h1>
+        <h1 className="text-white text-2xl lg:text-4xl">ENQUIRY</h1>
       </div>
     </div>
   );

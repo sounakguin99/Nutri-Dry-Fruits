@@ -8,14 +8,14 @@ import homebanners from "../../data/home/homebanners/banner"; // Ensure this pat
 
 const HeroSection: React.FC = () => {
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
-    arrows: true,
+    arrows: false,
     responsive: [
       {
         breakpoint: 1024,
@@ -29,7 +29,6 @@ const HeroSection: React.FC = () => {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
-          arrows: true,
         },
       },
       {
@@ -37,28 +36,25 @@ const HeroSection: React.FC = () => {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
-          arrows: true,
         },
       },
     ],
   };
 
   return (
-    <div className="hero-section w-full h-[232px] lg:h-[570px] xl:h-[700px] 2xl:h-[500px] overflow-hidden relative">
-      <Slider {...settings}>
-        {homebanners.map((banner, index) => (
-          <div key={index} className="w-full h-full bg-gray-200">
-            <Image
-              src={banner.src}
-              alt={banner.alt}
-              width={1920} // Set an appropriate width
-              height={700} // Set an appropriate height
-              className="w-full 2xl:h-[500px] h-[232px] lg:h-[570px] xl:h-[700px] object-contain "
-            />
-          </div>
-        ))}
-      </Slider>
-    </div>
+    <Slider {...settings}>
+      {homebanners.map((banner, index) => (
+        <div key={index}>
+          <Image
+            src={banner.src}
+            alt={banner.alt}
+            width={1920}
+            height={700}
+            className="w-full h-full object-contain "
+          />
+        </div>
+      ))}
+    </Slider>
   );
 };
 

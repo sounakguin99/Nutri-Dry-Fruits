@@ -9,7 +9,7 @@ export default function Navbar() {
 
   return (
     <nav className="bg-white shadow-sm">
-      <div className="w-11/12 mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-11/12 mx-auto relative">
         <div className="flex justify-between items-center h-20">
           {/* Logo and Brand */}
           <div className="flex items-center gap-3">
@@ -20,7 +20,7 @@ export default function Navbar() {
               height={40}
               className="rounded-full"
             />
-            <span className="text-gray-900 font-semibold text-lg hidden sm:block">
+            <span className="text-gray-900 font-semibold text-lg">
               ARIHANT DRY FRUITS
             </span>
           </div>
@@ -52,10 +52,10 @@ export default function Navbar() {
               STORE
             </Link>
           </div>
-          <div>
+          <div className="">
             <Link
               href="/contactus"
-              className="bg-[#6B584C] text-white px-6 py-2 rounded hover:bg-[#574539] transition-colors"
+              className="bg-[#6B584C] hidden md:block text-white px-6 py-2 rounded hover:bg-[#574539] transition-colors"
             >
               CONTACT US
             </Link>
@@ -97,35 +97,35 @@ export default function Navbar() {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+          <div className="md:hidden h-screen absolute z-50 bg-white w-full">
+            <div className="px-2 pt-2 pb-3 space-y-1">
               <Link
                 href="/"
-                className="block px-3 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md"
+                className="block py-2 px-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md"
               >
                 HOME
               </Link>
               <Link
                 href="/about"
-                className="block px-3 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md"
+                className="block py-2 px-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md"
               >
                 ABOUT US
               </Link>
               <Link
                 href="/products"
-                className="block px-3 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md"
+                className="block py-2 px-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md"
               >
                 PRODUCTS
               </Link>
               <Link
                 href="/store"
-                className="block px-3 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md"
+                className="block py-2 px-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md"
               >
                 STORE
               </Link>
               <Link
-                href="/contact"
-                className="block px-3 py-2 bg-[#6B584C] text-white rounded-md hover:bg-[#574539]"
+                href="/contactus"
+                className="block text-center py-2 px-2 bg-[#6B584C] text-white rounded-md hover:bg-[#574539]"
               >
                 CONTACT US
               </Link>

@@ -5,7 +5,7 @@ import mvp from "../../data/home/homebanners/mvp"; // Adjust the path to the loc
 export default function MostViewedProducts() {
   return (
     <section className="w-11/12 mx-auto xl:pl-[20px] xl:pr-[25px] 2xl:pl-[40px] 2xl:pr-[20px]">
-      <div className="flex flex-col lg:flex-row justify-between items-center mb-8">
+      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8">
         <div>
           <h2 className="text-2xl font-bold mb-2">MOST VIEWED PRODUCTS</h2>
           <p className="text-gray-600">

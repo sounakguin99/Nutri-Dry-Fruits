@@ -8,7 +8,7 @@ export default function Terms() {
       </h1>
 
       <div className="space-y-6">
-        <p className="font-medium">
+        {/* <p className="font-medium">
           Lorem Ipsum Is Simply Dummy Text Of The Printing And Typesetting
           Industry.
         </p>
@@ -139,7 +139,7 @@ export default function Terms() {
           Scrambled It To Make A Type Specimen Book. It Has Survived Not Only
           Five Centuries, But Also The Leap Into Electronic Typesetting,
           Remaining Essentially Unchanged.
-        </p>
+        </p> */}
       </div>
     </div>
   );

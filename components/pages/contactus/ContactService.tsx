@@ -4,7 +4,7 @@ import contact from "../../data/contactus/contact"; // Adjust the path based on 
 
 const ContactService: React.FC = () => {
   return (
-    <div className="flex items-center justify-center gap-6 mx-auto mt-[100px] w-full max-w-4xl">
+    <div className="flex flex-col lg:flex-row  items-center justify-center gap-6 mx-auto mt-[100px] w-full max-w-4xl">
       {contact.map((item, index) => (
         <div key={index}>
           <Image
