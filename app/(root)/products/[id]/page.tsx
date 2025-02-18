@@ -3,8 +3,16 @@ import { useParams } from "next/navigation";
 import Image from "next/image";
 import { products } from "../../../../components/data/products/products";
 import Link from "next/link";
-import { useState } from "react";
+import {
+  JSXElementConstructor,
+  Key,
+  ReactElement,
+  ReactNode,
+  ReactPortal,
+  useState,
+} from "react";
 import RelatedProducts from "@/components/pages/products/relatedproducts";
+import { StaticImport } from "next/dist/shared/lib/get-img-props";
 
 const ProductDetails = () => {
   const { id } = useParams(); // Use `useParams` for dynamic route parameter
@@ -25,7 +33,7 @@ const ProductDetails = () => {
         className="w-full mx-auto rounded-lg bg-cover bg-center "
         style={{ backgroundImage: "url('/others/pdetailsbanner.svg')" }} // Apply background image
       >
-        <div className="flex flex-col md:flex-row max-w-7xl mx-auto 0 p-10 gap-10">
+        <div className="flex flex-col md:flex-row md:w-11/12 mx-auto 0 p-10 gap-5 md:gap-10">
           {/* Variation Images (Mobile-first approach) */}
           <div className="hidden md:block">
             <div className="flex flex-row md:flex-col gap-3 h-auto w-auto">
@@ -36,24 +44,24 @@ const ProductDetails = () => {
                   alt={image.alt || "Product variation"}
                   width={500}
                   height={500}
-                  className=" object-cover cursor-pointer border-2 border-[#5f4039]"
+                  className=" object-cover h-[150px] w-[400px] cursor-pointer border-2 bg-white p-5 border-[#5f4039]"
                 />
               ))}
             </div>
           </div>
 
           {/* Product Main Image */}
-          <div className="w-full">
+          <div className="md:h-full md:w-full">
             <Image
               src={product.src}
               alt={product.alt}
-              width={300}
-              height={300}
-              className="rounded-lg h-full w-full border border-[#5f4039]"
+              width={600}
+              height={600}
+              className="rounded-lg p-10 h-full w-full border bg-white border-[#5f4039]"
             />
           </div>
           {/* Variation Images (Mobile-first approach) */}
-          <div className="flex flex-row md:flex-col gap-3 md:hidden">
+          <div className="flex flex-row md:flex-col gap-3 md:hidden ">
             {product.variations.map((image, index) => (
               <Image
                 key={index}
@@ -61,7 +69,7 @@ const ProductDetails = () => {
                 alt={image.alt || "Product variation"}
                 width={500}
                 height={500}
-                className="rounded-lg h-[100px] w-[250px] cursor-pointer border-2 border-[#5f4039]"
+                className="rounded-lg h-[100px] w-[250px] p-5 bg-white cursor-pointer border-2 border-[#5f4039]"
               />
             ))}
           </div>
@@ -127,7 +135,44 @@ const ProductDetails = () => {
           </div>
         </div>
       </div>
-      <RelatedProducts />
+      <div className=" mt-5 md:mt-16 flex flex-col md:flex-row items-start lg:items-center justify-between mb-6 w-11/12 mx-auto">
+        <div>
+          <h2 className="text-2xl font-bold mb-2">RELATED PRODUCTS</h2>
+          <p className="text-gray-600">
+            Discover some of our related products that might interest you.
+          </p>
+        </div>
+        <Link
+          href="/products"
+          className="px-10 py-2 border-2 border-black rounded mt-8 lg:mt-0 hover:bg-black hover:text-white transition-colors"
+        >
+          VIEW ALL
+        </Link>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 mb-14 lg:grid-cols-4 gap-6 w-11/12 mx-auto">
+        {product.relatedproducts?.map((relatedProduct, index) => (
+          <div key={index} className="bg-white rounded-lg">
+            <div className="relative mb-4 border border-black overflow-hidden">
+              <Image
+                src={relatedProduct.src}
+                alt={relatedProduct.name}
+                width={300}
+                height={300}
+                className="object-contain transition-transform hover:scale-105 p-5"
+              />
+            </div>
+            <div className="">
+              <h3 className="font-semibold text-xl mb-2 truncate">
+                {relatedProduct.name}
+              </h3>
+              <p className="text-gray-600 text-sm line-clamp-2">
+                {relatedProduct.description}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
