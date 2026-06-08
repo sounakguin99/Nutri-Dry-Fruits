@@ -1,5 +1,4 @@
-"use client";
-
+import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 
@@ -17,6 +16,40 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
+export const metadata: Metadata = {
+  title: {
+    template: "%s | Nature's Harvest",
+    default: "Nature's Harvest - Premium Dry Fruits & Nuts",
+  },
+  description: "Curating the finest, premium quality dry fruits, nuts, and exotic dates from around the world for your healthy lifestyle.",
+  keywords: ["dry fruits", "nuts", "exotic dates", "premium snacks", "healthy eating"],
+  openGraph: {
+    title: "Nature's Harvest",
+    description: "Premium quality dry fruits, nuts, and exotic dates.",
+    url: "https://naturesharvest.com",
+    siteName: "Nature's Harvest",
+    images: [
+      {
+        url: "/logo/logo.png",
+        width: 800,
+        height: 600,
+        alt: "Nature's Harvest Logo",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Nature's Harvest",
+    description: "Premium quality dry fruits, nuts, and exotic dates.",
+    images: ["/logo/logo.png"],
+  },
+  icons: {
+    icon: "/logo/logo.png",
+  },
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -24,10 +57,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <title>Arihant Dry Fruits</title>
-        <link rel="icon" href="/logo/logo.svg" />
-      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

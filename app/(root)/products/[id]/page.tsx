@@ -13,6 +13,9 @@ import {
 } from "react";
 import RelatedProducts from "@/components/pages/products/relatedproducts";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const ProductDetails = () => {
   const { id } = useParams(); // Use `useParams` for dynamic route parameter
@@ -26,6 +29,37 @@ const ProductDetails = () => {
   const [weight, setWeight] = useState(product ? product.weight : "100gm");
 
   if (!product) return <div className="p-6">Product not found!</div>;
+
+  const sliderSettings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    arrows: true,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+        }
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 2,
+        }
+      },
+      {
+        breakpoint: 640,
+        settings: {
+          slidesToShow: 1,
+        }
+      }
+    ]
+  };
 
   return (
     <div>
@@ -150,29 +184,65 @@ const ProductDetails = () => {
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 mb-14 lg:grid-cols-4 gap-6 w-11/12 mx-auto">
-        {product.relatedproducts?.map((relatedProduct, index) => (
-          <div key={index} className="bg-white rounded-lg">
-            <div className="relative mb-4 border border-black overflow-hidden">
-              <Image
-                src={relatedProduct.src}
-                alt={relatedProduct.name}
-                width={300}
-                height={300}
-                className="object-contain transition-transform hover:scale-105 p-5"
-              />
-            </div>
-            <div className="">
-              <h3 className="font-semibold text-xl mb-2 truncate">
-                {relatedProduct.name}
-              </h3>
-              <p className="text-gray-600 text-sm line-clamp-2">
-                {relatedProduct.description}
-              </p>
-            </div>
+      <div className="w-11/12 mx-auto mb-14">
+        {product.relatedproducts && product.relatedproducts.length > 0 ? (
+          <div className="product-slider-container px-4">
+            <Slider {...sliderSettings}>
+              {product.relatedproducts.map((relatedProduct, index) => (
+                <div key={index} className="px-3 h-full">
+                  <div className="bg-white border border-black rounded-xl hover:shadow-xl transition-all duration-300 flex flex-col h-full overflow-hidden group">
+                    <div className="relative w-full aspect-square bg-gray-50 p-6 flex items-center justify-center border-b border-black">
+                      <Image
+                        src={relatedProduct.src}
+                        alt={relatedProduct.name}
+                        fill
+                        className="object-contain p-4 group-hover:scale-110 transition-transform duration-500"
+                      />
+                    </div>
+                    <div className="p-6 flex-1 flex flex-col items-center text-center">
+                      <h3 className="font-bold text-lg text-gray-900 mb-2 line-clamp-1 group-hover:text-[#5f4039] transition-colors">
+                        {relatedProduct.name}
+                      </h3>
+                      <p className="text-gray-500 text-sm line-clamp-2">
+                        {relatedProduct.description}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </Slider>
           </div>
-        ))}
+        ) : (
+          <p className="text-gray-500 italic">No related products available.</p>
+        )}
       </div>
+
+      <style dangerouslySetInnerHTML={{__html: `
+        .product-slider-container .slick-prev:before,
+        .product-slider-container .slick-next:before {
+          color: #5f4039;
+          font-size: 32px;
+          opacity: 0.5;
+          transition: all 0.3s ease;
+        }
+        .product-slider-container .slick-prev:hover:before,
+        .product-slider-container .slick-next:hover:before {
+          color: #D4AF37;
+          opacity: 1;
+        }
+        .product-slider-container .slick-prev {
+          left: -40px;
+          z-index: 10;
+        }
+        .product-slider-container .slick-next {
+          right: -25px;
+          z-index: 10;
+        }
+        @media (max-width: 640px) {
+          .product-slider-container .slick-prev { left: -15px; }
+          .product-slider-container .slick-next { right: 0px; }
+        }
+      `}} />
     </div>
   );
 };

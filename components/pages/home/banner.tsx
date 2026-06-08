@@ -44,14 +44,26 @@ const HeroSection: React.FC = () => {
   return (
     <Slider {...settings}>
       {homebanners.map((banner, index) => (
-        <div key={index}>
+        <div key={index} className="relative w-full h-[500px] ">
           <Image
             src={banner.src}
             alt={banner.alt}
-            width={1920}
-            height={700}
-            className="w-full h-full object-contain "
+            fill
+            priority={index === 0}
+            className="object-cover"
           />
+          {/* Overlay */}
+          <div className="absolute inset-0 bg-black/40 flex flex-col justify-center items-center text-center px-4">
+            <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 drop-shadow-md">
+              {banner.title}
+            </h1>
+            <p className="text-lg md:text-2xl text-white mb-8 max-w-2xl drop-shadow-md">
+              {banner.subtitle}
+            </p>
+            <button className="bg-[#6B584C] text-white px-8 py-3 rounded hover:bg-[#574539] transition-colors font-semibold shadow-lg">
+              {banner.buttonText}
+            </button>
+          </div>
         </div>
       ))}
     </Slider>

@@ -8,8 +8,8 @@ export default function StoreGallery() {
         <div className="flex flex-col md:flex-row gap-4">
           <div>
             <Image
-              src="/store/st1.svg"
-              alt="Store interior with green arched shelving"
+              src="/store/nh_st1.png"
+              alt="Nature's Harvest store interior"
               width={600}
               height={800}
               className="w-full h-full object-cover rounded-lg"
@@ -17,8 +17,8 @@ export default function StoreGallery() {
           </div>
           <div>
             <Image
-              src="/store/st2.svg"
-              alt="Vase with yellow flowers"
+              src="/store/nh_st2.png"
+              alt="Premium nuts display"
               width={600}
               height={400}
               className="w-full h-full object-cover rounded-lg"
@@ -30,8 +30,8 @@ export default function StoreGallery() {
         <div className="flex flex-col gap-4">
           <div>
             <Image
-              src="/store/st3.svg"
-              alt="Store refrigerator display"
+              src="/store/nh_st3.png"
+              alt="Fresh juices and chilled display"
               width={600}
               height={400}
               className="w-full h-full object-cover rounded-lg"
@@ -40,7 +40,7 @@ export default function StoreGallery() {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <Image
-                src="/store/st4.svg"
+                src="/store/nh_st4.png"
                 alt="Product shelf display"
                 width={400}
                 height={400}
@@ -49,8 +49,8 @@ export default function StoreGallery() {
             </div>
             <div>
               <Image
-                src="/store/st5.svg"
-                alt="Store branding display"
+                src="/store/nh_st5.png"
+                alt="Nature's Harvest storefront"
                 width={400}
                 height={400}
                 className="w-full h-full object-cover rounded-lg"

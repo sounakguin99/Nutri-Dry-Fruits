@@ -9,19 +9,19 @@ export default function Navbar() {
 
   return (
     <nav className="bg-white shadow-sm">
-      <div className="w-11/12 mx-auto relative">
+      <div className="px-6 sm:px-8 lg:px-12 mx-auto relative">
         <div className="flex justify-between items-center h-20">
           {/* Logo and Brand */}
           <div className="flex items-center gap-3">
             <Image
-              src="/logo/logo.svg"
-              alt="Arihant Dry Fruits Logo"
+              src="/logo/logo.png"
+              alt="Nature's Harvest Logo"
               width={40}
               height={40}
               className="rounded-full"
             />
             <span className="text-gray-900 font-semibold text-lg">
-              ARIHANT DRY FRUITS
+              NATURE'S HARVEST
             </span>
           </div>
 

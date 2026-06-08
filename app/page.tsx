@@ -1,4 +1,10 @@
+import type { Metadata } from "next";
 import HeroSection from "@/components/pages/home/banner";
+
+export const metadata: Metadata = {
+  title: "Home",
+  description: "Premium quality dry fruits, nuts, and exotic dates curated for your healthy lifestyle.",
+};
 
 import TestimonialSlider from "@/components/pages/home/customers";
 import GiftCombos from "@/components/pages/home/giftcombos";

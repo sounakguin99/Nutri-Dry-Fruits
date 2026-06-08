@@ -4,26 +4,20 @@ export default function StoreData() {
   return (
     <div className="w-11/12 mx-auto pt-[80px]">
       <h1 className="text-4xl font-bold text-[#614141] mb-4">
-        ARIHANT DRY FRUITS
+        NATURE'S HARVEST
       </h1>
 
       <h2 className="text-lg font-medium mb-6">
-        Taste The Perfect Blend Of Nutrients And Flavor In Every Dry Fruit.
+        A Curated Selection of the World's Finest Nuts and Fruits
       </h2>
 
       <div className="space-y-4 mb-8">
         <p className="text-gray-700">
-          Lorem Ipsum Is Simply Dummy Text Of The Printing And Typesetting
-          Industry. Lorem Ipsum Has Been The Industry&apos;s Standard Dummy Text
-          Ever Since The 1500s, When An Unknown Printer Took A Galley Of Type
-          And Scrambled It To Make A Type Specimen Book.
+          At Nature's Harvest, we believe that healthy snacking should never compromise on taste. Our stores offer an extensive, hand-picked collection of premium dried fruits, exotic dates, and freshly roasted nuts sourced from the finest growers globally.
         </p>
 
         <p className="text-gray-700">
-          Lorem Ipsum Is Simply Dummy Text Of The Printing And Typesetting
-          Industry. Lorem Ipsum Has Been The Industry&apos;s Standard Dummy Text
-          Ever Since The 1500s, When An Unknown Printer Took A Galley Of Type
-          And Scrambled It To Make A Type Specimen Book.
+          Whether you're looking for an energizing midday snack, premium gifting options for your loved ones, or wholesome ingredients for your recipes, our expertly curated selection guarantees unmatched freshness and natural goodness in every bite.
         </p>
       </div>
 
@@ -42,9 +36,9 @@ export default function StoreData() {
             <circle cx="12" cy="10" r="3" />
           </svg>
           <span className="text-sm">
-            G-19, THE GRAND PLAZA, VIP ROAD,
+            789 ORCHARD WAY, VALLEY FARM,
             <br />
-            SURAT, GUJARAT 395007
+            CA 90210
           </span>
         </div>
 
@@ -77,7 +71,7 @@ export default function StoreData() {
           >
             <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
           </svg>
-          <span className="text-sm">+91 1234567890</span>
+          <span className="text-sm">+1 (800) 123-4567</span>
         </div>
       </div>
     </div>

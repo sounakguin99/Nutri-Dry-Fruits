@@ -41,8 +41,7 @@ export default function GiftCombos() {
         <div>
           <h2 className="text-2xl font-bold mb-2">GIFT COMBOS</h2>
           <p className="text-gray-600">
-            Lorem Ipsum Is Simply Dummy Text Of The Printing And Typesetting
-            Industry.
+            Premium quality nuts and dried fruits sourced globally.
           </p>
         </div>
         <Link

@@ -12,8 +12,7 @@ export default function MostViewedProducts() {
             RECOMMENDED FOR YOU
           </h2>
           <p className="text-gray-500">
-            Lorem Ipsum Is Simply Dummy Text Of The Printing And Typesetting
-            Industry.
+            Premium quality nuts and dried fruits sourced globally.
           </p>
         </div>
         <Link

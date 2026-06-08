@@ -1,44 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Nutri Dry Fruits
 
-## Getting Started
+Welcome to the **Nutri Dry Fruits** web application! This project is a modern, responsive marketing and e-commerce platform built for a premium dry fruits brand.
 
-First, run the development server:
+## 🚀 Tech Stack
 
+- **Framework**: [Next.js 16](https://nextjs.org/) (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Database**: MongoDB (Mongoose)
+- **UI Components**: React Slick
+
+## 📦 Getting Started
+
+### Prerequisites
+Make sure you have [Node.js](https://nodejs.org/) installed on your machine.
+
+### Installation
+
+1. Clone the repository and install dependencies:
+```bash
+npm install
+# or
+yarn install
+```
+
+2. Set up your environment variables. Create a `.env.local` file in the root directory:
+```env
+MONGODB_URI=your_mongodb_connection_string
+```
+
+3. Start the development server:
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🗂️ Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `/app`: Next.js App Router pages and API routes (`/api`).
+- `/components`: Reusable UI components.
+  - `/global`: Contains global layout components like `Navbar` and `Footer`.
+  - `/pages`: Contains page-specific sections and UI elements.
+- `/backend`: Contains Mongoose models for database interaction.
+- `/public`: Static assets (images, logos, etc).
 
-## Learn More
+## 🌍 Code Quality & Formatting
 
-To learn more about Next.js, take a look at the following resources:
+This project uses Prettier for code formatting.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Format code manually:
+```bash
+npx prettier --write .
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🌍 Deployment
 
-## Deploy on Vercel
+The easiest way to deploy this Next.js app is using the [Vercel Platform](https://vercel.com/new).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Check out the [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📄 License
 
-To install packeges - yarn
-To run the projects - yarn dev
-
-Technology used - Next.js, Typescript, MongoDB
-
-project brief - it is a marketing website and also a static website
-. In conponents global folder i have navbar and footer which is connected in layout.tsx
+Copyright © Nutri Dry Fruits. All Rights Reserved.

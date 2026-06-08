@@ -8,7 +8,7 @@ import "slick-carousel/slick/slick-theme.css";
 const testimonials = [
   {
     id: 1,
-    text: "Lorem Ipsum Is Simply Dummy Text Of The Industry. Lorem Ipsum Is Simply Dummy Text Of The Printing And Typesetting Industry.",
+    text: "I absolutely love the quality and freshness of these dry fruits! Highly recommended for a healthy lifestyle.",
     author: "Fenna",
   },
   {
